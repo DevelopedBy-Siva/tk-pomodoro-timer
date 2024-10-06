@@ -1,13 +1,7 @@
-import sys
-from tkinter import *  # type: ignore
+from customtkinter import *
 
 from constants import *
 from pm_timer import Timer
-
-
-# import Button from tkmacosx if on macOS
-if sys.platform == "darwin":
-    from tkmacosx import Button
 
 
 class TimerApp:
@@ -20,7 +14,6 @@ class TimerApp:
         """
         Create the UI
         """
-
         # Windows configs
         self.window.title(WINDOW["title"])
         self.window.config(background=WINDOW["bg"])
@@ -46,23 +39,14 @@ class TimerApp:
         """
         Widget container enabling navigation between different timers
         """
-        nav_frame = Frame(self.window, background=WINDOW["bg"])
+        nav_frame = CTkFrame(self.window, bg_color=WINDOW["bg"])
         nav_frame.grid(column=0, row=0, columnspan=3, pady=50, sticky="s")
         nav_col = 0
         for key, _ in TIMER_OPTIONS:
-            nav_btn = Button(
+            nav_btn = CTkButton(
                 nav_frame,
                 text=key,
-                pady=4,
-                cursor="hand",
-                font=("Ubuntu", 13),
-                fg="#fff",
-                borderwidth=0,
-                bg=WINDOW["bg"],
-                relief="flat",
-                highlightthickness=0,
                 command=lambda key=key: self.switch_timer(key),
-                borderless=1,
             )
             nav_btn.grid(column=nav_col, padx=10, row=0)
             nav_col += 1
@@ -71,7 +55,7 @@ class TimerApp:
         """
         Canvas widget that display the countdown
         """
-        self.canvas = Canvas(
+        self.canvas = CTkCanvas(
             width=350, height=350, background=WINDOW["bg"], highlightthickness=0
         )
         self.canvas.create_oval(10, 10, 340, 340, width=1, outline="#fff")
@@ -88,17 +72,16 @@ class TimerApp:
         """
         Button widget to start and reset the timer
         """
-        self.start_reset_btn = Button(
+        self.start_reset_btn = CTkButton(
+            self.window,
             text="START",
-            cursor="hand",
-            pady=8,
-            padx=50,
             command=self.launch_timer,
-            font=("Ubuntu", 16),
-            fg=BTN["txt-fg"],
-            borderwidth=0,
-            highlightthickness=0,
-            borderless=1,
+            fg_color="#FEFAE0",
+            hover_color="#F2EED7",
+            text_color="#000",
+            height=40,
+            width=200,
+            font=("Ubuntu", 14),
         )
         self.start_reset_btn.grid(column=0, row=2, pady=50, columnspan=3, sticky="n")
 
@@ -135,7 +118,7 @@ class TimerApp:
         if self.timer.is_running():
             return self.clear_timer()
         self.timer.start()
-        self.start_reset_btn["text"] = "STOP"
+        self.start_reset_btn.configure(text="STOP")
         seconds = self.timer.active * 60
         self.countdown(seconds)
 
@@ -159,9 +142,9 @@ class TimerApp:
         self.timer.stop()
         self.kill_timer()
         self.refresh_countdown(minutes=self.timer.active)
-        self.start_reset_btn["text"] = "START"
+        self.start_reset_btn.configure(text="START")
 
 
-window = Tk()
+window = CTk()
 app = TimerApp(window)
 window.mainloop()
