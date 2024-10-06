@@ -88,19 +88,19 @@ class TimerApp:
         """
         Button widget to start and reset the timer
         """
-        start_btn = Button(
+        self.start_reset_btn = Button(
             text="START",
             cursor="hand",
             pady=8,
             padx=50,
-            command=self.start_timer,
+            command=self.launch_timer,
             font=("Ubuntu", 16),
             fg=BTN["txt-fg"],
             borderwidth=0,
             highlightthickness=0,
             borderless=1,
         )
-        start_btn.grid(column=0, row=2, pady=50, columnspan=3, sticky="n")
+        self.start_reset_btn.grid(column=0, row=2, pady=50, columnspan=3, sticky="n")
 
     def switch_timer(self, btn):
         """
@@ -120,13 +120,22 @@ class TimerApp:
             text=self.timer.countdown_text(minutes=minutes, seconds=seconds),
         )
 
-    def start_timer(self):
+    def kill_timer(self):
+        """
+        Kill the scheduled countdown
+        """
+        if self.timer_id:
+            self.window.after_cancel(self.timer_id)
+
+    def launch_timer(self):
         """
         Begin the timer
         """
+        # Timer is already running. So, stop and reset countdown
         if self.timer.is_running():
-            return  # Timer is already running
+            return self.clear_timer()
         self.timer.start()
+        self.start_reset_btn["text"] = "STOP"
         seconds = self.timer.active * 60
         self.countdown(seconds)
 
@@ -136,11 +145,21 @@ class TimerApp:
         """
         if seconds <= 0:
             self.timer.stop()
+            self.kill_timer()
             return
         seconds -= 1
         # Update UI timer text
         self.refresh_countdown(seconds=seconds)
-        self.window.after(1000, self.countdown, seconds)
+        self.timer_id = self.window.after(1000, self.countdown, seconds)
+
+    def clear_timer(self):
+        """
+        Reset all time timer process
+        """
+        self.timer.stop()
+        self.kill_timer()
+        self.refresh_countdown(minutes=self.timer.active)
+        self.start_reset_btn["text"] = "START"
 
 
 window = Tk()
