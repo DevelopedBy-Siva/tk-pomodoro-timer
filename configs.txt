@@ -1,0 +1,3 @@
+pomodoro=25
+short break=5
+long break=15
