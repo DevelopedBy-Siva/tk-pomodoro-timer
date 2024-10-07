@@ -12,6 +12,11 @@ WINDOW = {
     "width": 840,
     "height": 680,
     "txt": "#FEFAE0",
+    "settings": {
+        "width": 460,
+        "height": 380,
+        "title": "ZenFocus Settings",
+    },
 }
 
 # Button
@@ -22,15 +27,27 @@ BTN = {
     "inactive": "#B1AF9C",
 }
 
-
 # Timer options ("option name" : default timer value)
-TIMER_OPTIONS = (("pomodoro", 25), ("short break", 5), ("long break", 15))
+TIMER_OPTIONS = (
+    ("pomodoro", 25),
+    ("short break", 5),
+    ("long break", 15),
+)
+# Timer limit in minutes
+TIMER_LIMIT = 90
 
 # Font
-TEXT = {"font-family": "Ubuntu", "light": "#FEFAE0", "dark": "#181C14"}
+TEXT = {
+    "font-family": "Ubuntu",
+    "light": "#FEFAE0",
+    "dark": "#181C14",
+}
 
 # Navigation buttons on hover/leave colors
-NAV_HOVER = {"in": (BTN["bg"], TEXT["dark"]), "out": (BTN["nav-bg"], TEXT["light"])}
+NAV_HOVER = {
+    "in": (BTN["bg"], TEXT["dark"]),
+    "out": (BTN["nav-bg"], TEXT["light"]),
+}
 
 # User settings file
 CONFIG_FILE_NAME = "configs.txt"

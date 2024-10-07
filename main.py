@@ -3,12 +3,14 @@ from PIL import Image
 
 from constants import *
 from pm_timer import Timer
+from settings import Settings
 
 
 class TimerApp:
     def __init__(self, window):
         self.window = window
-        self.timer = Timer()
+        self.settings = Settings(root=self.window)
+        self.timer = Timer(self.settings.configs)
         self.nav_buttons = {}
         self.canvas = None
         # Load images for widget icons
@@ -168,7 +170,7 @@ class TimerApp:
             fg_color=BTN["nav-bg"],
             bg_color=BTN["nav-bg"],
             hover=False,
-            command=lambda: print("hello"),
+            command=self.settings.open_window,
         )
         settings_btn.place(x=25, y=30)
 

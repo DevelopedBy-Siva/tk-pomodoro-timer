@@ -1,13 +1,12 @@
 import datetime
 
 from constants import TIMER_OPTIONS
-from settings import Settings
 
 
 class Timer:
-    def __init__(self):
+    def __init__(self, settings):
         self.running = False
-        self.settings = Settings().load_configs()
+        self.settings = settings
         self.activate(TIMER_OPTIONS[0][0])
 
     def activate(self, active):
