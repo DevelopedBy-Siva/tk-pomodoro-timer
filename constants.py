@@ -13,8 +13,8 @@ WINDOW = {
     "height": 680,
     "txt": "#FEFAE0",
     "settings": {
-        "width": 460,
-        "height": 380,
+        "width": 440,
+        "height": 360,
         "title": "ZenFocus Settings",
     },
 }
@@ -25,6 +25,13 @@ BTN = {
     "nav-bg": "#798645",
     "hover": "#F2EED7",
     "inactive": "#B1AF9C",
+}
+
+# Spinbox
+SPINBOX = {
+    "fg": "#D6D6C2",
+    "btn": "#C6C6B6",
+    "btn-hover": "#C0C0AE",
 }
 
 # Timer options ("option name" : default timer value)

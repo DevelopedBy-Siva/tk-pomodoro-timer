@@ -48,21 +48,20 @@ class Settings:
                 user_input_frame,
                 width=100,
                 height=40,
-                font=(TEXT["font-family"], 13),
+                font=(TEXT["font-family"], 15),
                 step_value=1,
-                min_value=self.configs[opt],
+                start_value=self.configs[opt],
+                min_value=1,
                 max_value=TIMER_LIMIT,
-                button_color=BTN["bg"],
                 text_color=TEXT["dark"],
-                fg_color=BTN["nav-bg"],
-                # background=BTN["nav-bg"],
-                # borderwidth=1,
-                # highlightthickness=0,
-                # font=(TEXT["font-family"], 18),
-                # from_=1,
-                # to=TIMER_LIMIT,
+                fg_color=SPINBOX["fg"],
+                button_color=SPINBOX["btn"],
+                button_hover_color=SPINBOX["btn-hover"],
+                border_color=BTN["bg"],
+                button_border_color=SPINBOX["fg"],
+                border_width=0,
             )
-            input_box.grid(column=1, row=idx, padx=10, pady=15)
+            input_box.grid(column=1, row=idx, pady=15)
             self.user_inputs[opt] = input_box
 
             # Input units label
@@ -72,7 +71,7 @@ class Settings:
                 font=(TEXT["font-family"], 15),
                 text_color=TEXT["light"],
             )
-            units_label.grid(column=2, row=idx, padx=10, pady=15)
+            units_label.grid(column=2, row=idx, padx=15, pady=15)
 
         # Align the user input boxes to the center
         user_input_frame.place(relx=0.5, rely=0.4, anchor="center")
@@ -85,8 +84,8 @@ class Settings:
             fg_color=BTN["bg"],
             hover_color=BTN["hover"],
             text_color=TEXT["dark"],
-            height=30,
-            width=100,
+            height=35,
+            width=130,
             command=self.capture_configs,
         )
         save_btn.place(relx=0.5, rely=0.82, anchor="center")
