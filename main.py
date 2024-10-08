@@ -9,8 +9,8 @@ from settings import Settings
 class TimerApp:
     def __init__(self, window):
         self.window = window
-        self.settings = Settings(root=self.window)
-        self.timer = Timer(self.settings.configs)
+        self.timer = Timer()
+        self.settings = Settings(root=self.window, refresh=self.configs_updated)
         self.nav_buttons = {}
         self.canvas = None
         # Load images for widget icons
@@ -134,7 +134,9 @@ class TimerApp:
         self.countdown_txt = self.canvas.create_text(
             175,
             175,
-            text=self.timer.countdown_text(minutes=self.timer.active),
+            text=self.timer.countdown_text(
+                minutes=self.settings.active_timer_duration()
+            ),
             font=(TEXT["font-family"], 92, "bold"),
             fill=TEXT["light"],
         )
@@ -186,8 +188,8 @@ class TimerApp:
         # Set active BG & Txt color for current nav
         nav_ref.configure(fg_color=BTN["bg"], text_color=TEXT["dark"], hover=False)
 
-        self.timer.activate(value)
-        self.refresh_countdown(minutes=self.timer.active)
+        self.settings.switch_timer_option(value)
+        self.refresh_countdown(minutes=self.settings.active_timer_duration())
 
     def refresh_countdown(self, minutes=0, seconds=None):
         """
@@ -214,7 +216,7 @@ class TimerApp:
 
         self.timer.start()
         self.start_reset_btn.configure(text="STOP", image=self.stop_ico)
-        seconds = self.timer.active * 60
+        seconds = self.settings.active_timer_duration() * 60
         self.countdown(seconds)
 
     def countdown(self, seconds):
@@ -243,8 +245,12 @@ class TimerApp:
             ref.configure(state="normal")
 
         self.timer.stop()
-        self.refresh_countdown(minutes=self.timer.active)
+        self.refresh_countdown(minutes=self.settings.active_timer_duration())
         self.start_reset_btn.configure(text="START", image=self.play_ico)
+
+    def configs_updated(self):
+        if not self.timer.is_running():
+            self.refresh_countdown(minutes=self.settings.active_timer_duration())
 
 
 window = CTk()

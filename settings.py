@@ -6,12 +6,29 @@ from constants import *
 
 class Settings:
 
-    def __init__(self, root):
+    def __init__(self, root, refresh):
+        """
+        Settings screen
+        Args:
+            root (CTk): Parent window
+            refresh (method): Refresh UI to update new configs
+        """
         self.root = root
         self.popup = None
-        self.configs = self.load_configs()
         self.user_inputs = {}
+        self.configs = self.load_configs()
+        self.active = TIMER_OPTIONS[0][0]
         self.setup_window()
+        self.refresh = refresh
+
+    def switch_timer_option(self, active):
+        """
+        Toggle between different timers
+        """
+        self.active = active
+
+    def active_timer_duration(self):
+        return self.configs[self.active]
 
     def setup_window(self):
         """
@@ -100,6 +117,10 @@ class Settings:
         self.__save_configs(options)
         # Load new configs
         self.configs = {key: value for key, value in options}
+
+        # Refresh UI
+        self.refresh()
+
         # Close window after saving
         self.close_window()
 
