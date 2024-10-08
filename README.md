@@ -21,3 +21,15 @@ A simple Pomodoro timer built with Python using Tkinter
    ```bash
    python main.py
    ```
+
+---
+
+<h3 align="center">Home page</h3>
+<p align="center">
+  <img src="static/ui-home.png" alt="ui-home" width="600">
+</p>
+
+<h3 align="center">Settings page</h3>
+<p align="center">
+  <img src="static/ui-settings.png" alt="ui-settings" width="600">
+</p>
